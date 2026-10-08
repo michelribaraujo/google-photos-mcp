@@ -8,6 +8,7 @@ export default defineConfig({
       GOOGLE_CLIENT_ID: 'test-client-id',
       GOOGLE_CLIENT_SECRET: 'test-client-secret',
     },
+    unstubEnvs: true,
     include: ['test/**/*.test.ts'],
     exclude: ['node_modules', 'dist', 'test/photos.test.ts', 'test/security.test.ts', 'test/tokens.test.ts', 'src/api/__tests__/**'],
     coverage: {

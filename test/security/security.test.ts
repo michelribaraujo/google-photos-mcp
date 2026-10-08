@@ -315,9 +315,11 @@ describe("Security Tests", () => {
       await fs.writeFile(tmpFile, "{}", { mode: 0o600 });
       const stats = await fs.stat(tmpFile);
 
-      // Check that only owner can read/write (mode 600)
-      const mode = stats.mode & 0o777;
-      expect(mode).toBe(0o600);
+      // Check that only owner can read/write (mode 600); POSIX mode bits are not enforced on Windows
+      if (process.platform !== "win32") {
+        const mode = stats.mode & 0o777;
+        expect(mode).toBe(0o600);
+      }
 
       // Cleanup
       await fs.rm(tmpDir, { recursive: true, force: true });

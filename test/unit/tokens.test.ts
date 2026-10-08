@@ -328,6 +328,7 @@ describe("tokens.ts — AUTH-01", () => {
     });
 
     it("enforces owner-only ACL on Windows using icacls.exe", () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const execSpy = vi
         .spyOn(childProcess, "execFileSync")
         .mockReturnValue(Buffer.from(""));
@@ -362,6 +363,7 @@ describe("tokens.ts — AUTH-01", () => {
     });
 
     it("removes non-owner explicit ACEs when discovered in icacls query", () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const execSpy = vi
         .spyOn(childProcess, "execFileSync")
         .mockReturnValueOnce(Buffer.from(""))
@@ -527,6 +529,7 @@ describe("tokens.ts — AUTH-01", () => {
     });
 
     it("removes owner explicit deny ACEs via /remove:d and re-applies owner grant", () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const execSpy = vi.spyOn(childProcess, "execFileSync");
       const originalUsername = process.env.USERNAME;
       process.env.USERNAME = "alice";
@@ -704,6 +707,7 @@ describe("tokens.ts — AUTH-01", () => {
     });
 
     it("enforces inheritance container/object owner-only ACL on Windows for directories", async () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const fsPromises = await import("node:fs/promises");
       const tmpDir = await fsPromises.mkdtemp(
         path.join(process.cwd(), "test-win-dir-"),
@@ -773,6 +777,7 @@ describe("tokens.ts — AUTH-01", () => {
     });
 
     it("enforceOwnerOnlyPermissions invokes enforceWindowsOwnerOnlyAcl when platform is win32", async () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const fsPromises = await import("node:fs/promises");
       const tmpDir = await fsPromises.mkdtemp(
         path.join(process.cwd(), "test-win-enforce-"),

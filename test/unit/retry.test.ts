@@ -8,6 +8,7 @@ import {
   createMockAxiosError,
   createMockNetworkError,
 } from "../helpers/mocks.js";
+import { toError } from "../../src/api/client.js";
 
 // Mock the logger to suppress output during tests
 vi.mock("../../src/utils/logger.js", () => ({
@@ -181,7 +182,6 @@ describe("withRetry", () => {
   });
 
   it("retries safe API errors normalized by toError when they contain transient Axios metadata", async () => {
-    const { toError } = await import("../../src/api/client.js");
     const transientErr = toError(
       createMockAxiosError(500, "Internal Server Error"),
       "mediaItems.search",
@@ -206,7 +206,6 @@ describe("withRetry", () => {
   });
 
   it("does not retry non-idempotent API operations after normalized failures", async () => {
-    const { toError } = await import("../../src/api/client.js");
     const writeError = toError(
       createMockAxiosError(503, "Service Unavailable"),
       "albums.create",

@@ -2193,6 +2193,7 @@ describe("Picker API repositories", () => {
     });
 
     it("enforces owner-only ACL on Windows if destination does not exist", () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const execSpy = vi
         .spyOn(childProcess, "execFileSync")
         .mockReturnValue(Buffer.from(""));
@@ -2226,6 +2227,7 @@ describe("Picker API repositories", () => {
     });
 
     it("preserves owner-only ACL on Windows if destination has inheritance disabled", () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const execSpy = vi
         .spyOn(childProcess, "execFileSync")
         .mockReturnValue(Buffer.from(""));
@@ -2267,6 +2269,7 @@ describe("Picker API repositories", () => {
     });
 
     it("enforces owner-only ACL on Windows if destination has explicit deny ACE even with inherited allows", () => {
+      vi.stubEnv("USERDOMAIN", undefined);
       const execSpy = vi
         .spyOn(childProcess, "execFileSync")
         .mockReturnValue(Buffer.from(""));
